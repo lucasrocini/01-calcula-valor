@@ -29,3 +29,56 @@ describe('arredondar', () => {
     expect(resultado).toBe(1.01)
   })
 })
+
+describe('calcularPrestacoes', () => {
+    test('O número de parcelas é igual ao número de prestações', () => {
+        //Premissas
+        const numeroPrestacoes = 6
+
+        //Operação
+        prestacoes = calculaValor.calcularPrestacoes(200, numeroPrestacoes)
+
+        //Resultado Esperado
+        expect(prestacoes.length).toBe(numeroPrestacoes)
+    })
+
+    test('Uma única prestação, valor igual ao montante', () => {
+        const numeroPrestacoes = 1
+
+        prestacoes = calculaValor.calcularPrestacoes(50, numeroPrestacoes)
+
+        expect(prestacoes.length).toBe(numeroPrestacoes)
+        expect(prestacoes[0]).toBe(50)
+    })
+
+    test('Uma única prestação, valor igual ao montante', () => {
+        const numeroPrestacoes = 1
+
+        prestacoes = calculaValor.calcularPrestacoes(50, numeroPrestacoes)
+
+        expect(prestacoes.length).toBe(numeroPrestacoes)
+        expect(prestacoes[0]).toBe(50)
+    })
+
+    test('Duas Prestações, valor igual à metado do montante', () => {
+        const numeroPrestacoes = 2
+
+        prestacoes = calculaValor.calcularPrestacoes(50, numeroPrestacoes)
+
+        expect(prestacoes.length).toBe(numeroPrestacoes)
+        expect(prestacoes[0]).toBe(25)
+        expect(prestacoes[1]).toBe(25)
+    })
+
+    test('Valor da soma das prestações, deve ser igual ao montante com 02 casas decimais', () => {
+        const numeroPrestacoes = 3
+        const montante = 100
+
+        prestacoes = calculaValor.calcularPrestacoes(montante, numeroPrestacoes)
+
+        expect(prestacoes.length).toBe(numeroPrestacoes)
+        const soma = calculaValor.arredondar(prestacoes[0] + prestacoes[1] + prestacoes[2] )
+        expect(soma).toBe(montante)
+    })
+  
+  })
