@@ -6,28 +6,28 @@ function calcularMontante (capital, taxa, periodo) {
 
 function arredondar (valor) {
   const precisao = 100 // 02 casas decimais
-  const arredondado = Math.round((valor + Number.EPSILON)* precisao) / precisao
+  const arredondado = Math.round((valor + Number.EPSILON) * precisao) / precisao
   return arredondado
 }
 
 function calcularPrestacoes (montante, numeroParcelas) {
-    const prestacaoBase = arredondar(montante / numeroParcelas);
-    const resultado = Array(numeroParcelas).fill(prestacaoBase);
+  const prestacaoBase = arredondar(montante / numeroParcelas)
+  const resultado = Array(numeroParcelas).fill(prestacaoBase)
 
-    let somaPrestacoes = resultado.reduce((a, t) => a + t);
-    let diferenca = arredondar(montante - somaPrestacoes);
-    let i = 0;
-    while(diferenca != 0) {
-        resultado[i] = resultado[i] + 0.01;
-        somaPrestacoes = resultado.reduce((a, t) => a + t);
-        diferenca = arredondar(montante - somaPrestacoes);
-        i++;
-    }
+  let somaPrestacoes = resultado.reduce((a, t) => a + t)
+  let diferenca = arredondar(montante - somaPrestacoes)
+  const fator = diferenca > 0 ? 1 : -1
 
-    return resultado;
+  let i = diferenca > 0 ? 0 : resultado.length - 1
+  while (diferenca !== 0) {
+    resultado[i] = arredondar(resultado[i] + (0.01 * fator))
+    somaPrestacoes = resultado.reduce((a, t) => a + t)
+    diferenca = arredondar(montante - somaPrestacoes)
+    i += fator
+  }
+
+  return resultado
 }
-
-
 
 module.exports = {
   calcularMontante,
